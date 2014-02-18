@@ -1,6 +1,6 @@
-#   WAML
+#   NOCO
 
-Writeable Associative Markup Language (WAML) is designed to be easy to write and easy to parse. It has only one primitive value type (**string**) and two container types (**object** and **array**). It doesn't have commas to separate items in an object or array, and it doesn't have equals or colon between key-value pairs in objects.
+No Commas/Colons (NOCO) is an object notation language like JSON designed to be easy to write and easy to parse. It has only one primitive value type (**string**) and two container types (**object** and **array**). It doesn't have commas to separate items in an object or array, and it doesn't have equals or colon between key-value pairs in objects.
 
 ##  Spec
 
@@ -20,19 +20,19 @@ Writeable Associative Markup Language (WAML) is designed to be easy to write and
 
 The root object is **implied** instead of explicit.
 
-- WAML: `user "matt"`
+- NOCO: `user "matt"`
 - JSON: `{ "user": "matt" }`
 
 ### Selectors
 
 You can drill down objects with dot notation.
 
-- WAML: `user.name.first "Matt"`
+- NOCO: `user.name.first "Matt"`
 - JSON: `{ "user": { "name": { "first": "Matt" } } }`
 
 You can select and append to arrays using bracket notation.
 
-- WAML: `users[] "Sam"`
+- NOCO: `users[] "Sam"`
 - JSON: `{ "users": [ "Sam" ] }`
 
 ### Comments
@@ -46,7 +46,7 @@ C/JS/Java style.
 
 ### No commas or semicolons
 
-- WAML
+- NOCO
 
         address {
             streetAddress "21 2nd Street"
@@ -68,7 +68,7 @@ C/JS/Java style.
 
 ### Selector example
 
-- WAML
+- NOCO
 
         cluster {
             name "My Cluster"
