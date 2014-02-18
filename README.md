@@ -23,7 +23,7 @@ Writeable Associative Markup Language
                 "city": "New York",
                 "state": "NY",
                 "postalCode": "10021"
-            },
+            }
         }
 
 ###WAML supports dot notation:
