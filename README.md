@@ -20,8 +20,8 @@ Writeable Associative Markup Language (WAML) is designed to be easy to write and
 
 The root object is **implied** instead of explicit.
 
-- WAML: `name "matt"`
-- JSON: `{ "name": "matt" }`
+- WAML: `user "matt"`
+- JSON: `{ "user": "matt" }`
 
 ### Selectors
 
@@ -29,6 +29,11 @@ You can drill down objects with dot notation.
 
 - WAML: `user.name.first "Matt"`
 - JSON: `{ "user": { "name": { "first": "Matt" } } }`
+
+You can select and append to arrays using bracket notation.
+
+- WAML: `users[] "Sam"`
+- JSON: `{ "users": [ "Sam" ] }`
 
 ### Comments
 
@@ -39,7 +44,7 @@ C/JS/Java style.
 
 ##  Longer examples
 
-### WAML drops the commas and semicolons of JSON:
+### No commas or semicolons
 
 - WAML
 
@@ -61,32 +66,63 @@ C/JS/Java style.
             }
         }
 
-###How WAML supports dot notation:
+### Selector example
 
 - WAML
 
-        database {
-            user "matt" pass "password123"
-            cluster [
-                { server "192.168.1.1" port "8001" }
-                { server "192.168.1.2" port "8021" }
-                { server "192.168.1.3" port "8042" }
-                { server "192.168.1.4" port "8075" }
-            ]
+        cluster {
+            name "My Cluster"
+            service "My Service"
         }
-        database.name "My Database"
-    
+        
+        cluster.node[] {
+            city "New York"
+            state "NY"
+            server "192.128.0.3"
+            port "4003"
+        }
+        
+        cluster.node[] {
+            city "Austin"
+            state "TX"
+            server "192.128.0.4"
+            port "4004"
+        }
+        
+        cluster.node[] {
+            city "Los Angeles"
+            state "CA"
+            server "192.128.0.2"
+            port "4002"
+        }
+        
 - JSON
 
         {
-            "database": {
-                "user": "matt", "pass": "password123",
-                "clusters": [
-                    { "server": "192.168.1.1", "port": "8001" },
-                    { "server": "192.168.1.2", "port": "8021" },
-                    { "server": "192.168.1.3", "port": "8042" },
-                    { "server": "192.168.1.4", "port": "8075" }
-                ],
-                "name": "My Database"
+            "cluster": {
+                "name": "My Cluster",
+                "service": "My Service",
+                "node": [
+                    {
+                        "city": "New York",
+                        "state": "NY",
+                        "server": "192.128.0.3",
+                        "port": "4003"
+                    },
+
+                    {
+                        "city": "Austin",
+                        "state": "TX",
+                        "server": "192.128.0.4",
+                        "port": "4004"
+                    },
+
+                    {
+                        "city": "Los Angeles",
+                        "state": "CA",
+                        "server": "192.128.0.2",
+                        "port": "4002"
+                    }
+                ]
             }
-        }
+        }        
