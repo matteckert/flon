@@ -44,7 +44,7 @@ C/JS/Java style.
 
 ##  Longer examples
 
-### No commas or semicolons
+### No commas or colons
 
 - NOCO
 
