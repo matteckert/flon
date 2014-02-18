@@ -27,7 +27,7 @@ The root object is **implied** instead of explicit.
 
 You can drill down objects with dot notation.
 
-- WAML: `'user.name.first "Matt"'`
+- WAML: `user.name.first "Matt"`
 - JSON: `{ "user": { "name": { "first": "Matt" } } }`
 
 ### Comments
