@@ -56,7 +56,7 @@ Writeable Associative Markup Language
             }
         }
         
-###Upstream objects are inferred:
+###Upstream objects are inferred when using dot notation:
 
 - WAML
     
@@ -72,3 +72,6 @@ Writeable Associative Markup Language
             }
         }
 
+##Notes
+
+- Keys aren't quoted like in JSON, this means keys don't support whitespace.
