@@ -1,6 +1,6 @@
 #   NOCO
 
-No Commas/Colons (NOCO) is an object notation language like JSON designed to be easy to write and easy to parse. It has only one primitive value type (**string**) and two container types (**object** and **array**). It doesn't have commas to separate items in an object or array, and it doesn't have equals or colon between key-value pairs in objects.
+No Commas/Colons (NOCO) is an object notation language like JSON designed to be easy to write and easy to parse. It has only one primitive value type (**string**) and two container types (**object** and **array**). It doesn't have commas to separate items in an object or array, and it doesn't have equals or colons between key-value pairs in objects.
 
 ##  Spec
 
