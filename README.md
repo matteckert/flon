@@ -1,6 +1,6 @@
-#   NOCO
+#   FLON
 
-No Commas/Colons (NOCO) is an object notation language like JSON designed to be easy to write and easy to parse. It has only one primitive value type (**string**) and two container types (**object** and **array**). It doesn't have commas to separate items in an object or array, and it doesn't have equals or colons between key-value pairs in objects.
+Flat Object Notation (FLON) is designed to be easy to read and write. It has only one primitive value type (**string**) and two container types (**object** and **array**). It doesn't have commas to separate items in an object or array, and it doesn't have equals or colons between key-value pairs in objects.
 
 ##  Spec
 
@@ -20,19 +20,19 @@ No Commas/Colons (NOCO) is an object notation language like JSON designed to be 
 
 The root object is **implied** instead of explicit.
 
-- NOCO: `user "matt"`
+- FLON: `user "matt"`
 - JSON: `{ "user": "matt" }`
 
 ### Selectors
 
 You can drill down objects with dot notation.
 
-- NOCO: `user.name.first "Matt"`
+- FLON: `user.name.first "Matt"`
 - JSON: `{ "user": { "name": { "first": "Matt" } } }`
 
 You can select and append to arrays using bracket notation.
 
-- NOCO: `users[] "Sam"`
+- FLON: `users[] "Sam"`
 - JSON: `{ "users": [ "Sam" ] }`
 
 ### Comments
@@ -46,7 +46,7 @@ C/JS/Java style.
 
 ### No commas or colons
 
-- NOCO
+- FLON
 
         address {
             streetAddress "21 2nd Street"
@@ -68,7 +68,7 @@ C/JS/Java style.
 
 ### Selector example
 
-- NOCO
+- FLON
 
         cluster {
             name "My Cluster"
