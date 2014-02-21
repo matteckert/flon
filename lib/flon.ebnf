@@ -1,0 +1,9 @@
+key =  id ('.' id)* '+'?
+
+value = object | array | string
+
+object = '{' (key value)* '}'
+
+array = '[' value* ']'
+
+string = '"' character* '"'
