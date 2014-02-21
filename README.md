@@ -30,9 +30,9 @@ You can drill down objects with dot notation.
 - FLON: `user.name.first "Matt"`
 - JSON: `{ "user": { "name": { "first": "Matt" } } }`
 
-You can select and append to arrays using bracket notation.
+You can select and append to arrays using a plus after the selector.
 
-- FLON: `users[] "Sam"`
+- FLON: `users+ "Sam"`
 - JSON: `{ "users": [ "Sam" ] }`
 
 ### Comments
@@ -75,21 +75,21 @@ C/JS/Java style.
             service "My Service"
         }
         
-        cluster.node[] {
+        cluster.node+ {
             city "New York"
             state "NY"
             server "192.128.0.3"
             port "4003"
         }
         
-        cluster.node[] {
+        cluster.node+ {
             city "Austin"
             state "TX"
             server "192.128.0.4"
             port "4004"
         }
         
-        cluster.node[] {
+        cluster.node+ {
             city "Los Angeles"
             state "CA"
             server "192.128.0.2"
