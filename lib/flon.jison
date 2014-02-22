@@ -2,48 +2,53 @@
 %%
 
 \s+                         /* skip whitespace */
-[a-zA-Z][a-zA-Z0-9]*        return 'IDENTIFIER';
-\"(?:[^\"\\]|\\.)*\"        return 'STRING_LITERAL'
-"{"                         return '{'
-"}"                         return '}'
-"["                         return '['
-"]"                         return ']'
-"."                         return '.'
-"+"                         return '+'
+[a-zA-Z][a-zA-Z0-9]*        return 'ID';
+\"(?:[^\"\\]|\\.)*\"        yytext = yytext.substr(1,yyleng-2); return 'STRING';
+"{"                         return '{';
+"}"                         return '}';
+"["                         return '[';
+"]"                         return ']';
+"."                         return '.';
+"+"                         return '+';
+<<EOF>>                     return 'EOF';
 /lex
 
-%start key_value_list
+%start root
 
 %%
 
+root
+    : key_value_list EOF            { return $1; }
+    ;
+
 key
-    : IDENTIFIER
-    | key '.' IDENTIFIER
-    | key '+'
+    : ID
+    | key '.' ID                    { throw "Selectors are not supported yet!"; }
+    | key '+'                       { throw "Selectors are not supported yet!"; }
     ;
 
 value
-    : STRING_LITERAL
+    : STRING
     | object
     | array
     ;
 
 value_list
-    : value
-    | value_list value
+    : value                         { $$ = []; $$.push($1); }
+    | value_list value              { $$.push($2); }
     ;
 
 key_value_list
-    : key value
-    | key_value_list key value
+    : key value                     { $$ = {}; $$[$1] = $2; }
+    | key_value_list key value      { $$[$2] = $3; }
     ;
 
 object 
-    : '{' '}'
-    | '{' key_value_list '}'
+    : '{' '}'                       { $$ = {}; }
+    | '{' key_value_list '}'        { $$ = $2; }
     ;
 
 array 
-    : '[' ']'
-    | '[' value_list ']'
+    : '[' ']'                       { $$ = []; }
+    | '[' value_list ']'            { $$ = $2; }
     ;
