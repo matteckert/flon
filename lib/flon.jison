@@ -23,8 +23,8 @@ root
 
 key
     : ID
-    | key '.' ID                    { throw "Selectors are not supported yet!"; }
-    | key '+'                       { throw "Selectors are not supported yet!"; }
+    | key '.' ID                    { throw new Error("Selectors are not supported yet."); }
+    | key '+'                       { throw new Error("Selectors are not supported yet."); }
     ;
 
 value
