@@ -1,0 +1,29 @@
+{
+  "name": "flon",
+  "version": "0.0.0",
+  "description": "Flat Object Notation langauge.",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/matteckert/flon.git"
+  },
+  "author": "Matt Eckert <me@matteckert.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matteckert/flon/issues"
+  },
+  "homepage": "https://github.com/matteckert/flon",
+  "devDependencies": {
+    "gulp": "~3.5.2",
+    "jison": "~0.4.13",
+    "mocha": "~1.17.1",
+    "gulp-jshint": "~1.4.2",
+    "gulp-mocha": "~0.4.1",
+    "jshint-stylish": "~0.1.5",
+    "should": "~3.1.2",
+    "gulp-util": "~2.2.14"
+  }
+}
