@@ -6,16 +6,16 @@
 
 %%
 
-\s+                         /* skip whitespace */
-[a-zA-Z][a-zA-Z0-9]*        return 'ID';
-\"(?:[^\"\\]|\\.)*\"        yytext = yytext.substr(1,yyleng-2); return 'STRING';
-"{"                         return '{';
-"}"                         return '}';
-"["                         return '[';
-"]"                         return ']';
-"."                         return '.';
-"+"                         return '+';
-<<EOF>>                     return 'EOF';
+\s+                             /* skip whitespace */
+[a-zA-Z][a-zA-Z0-9]*            return 'ID';
+\"(?:[^\"\\]|\\.)*\"            yytext = yytext.substr(1,yyleng-2); return 'STRING';
+"{"                             return '{';
+"}"                             return '}';
+"["                             return '[';
+"]"                             return ']';
+"."                             return '.';
+"+"                             return '+';
+<<EOF>>                         return 'EOF';
 /lex
 
 %start root
@@ -31,7 +31,7 @@ root
     ;
 
 key
-    : ID                        { $$ = []; $$["append"] = false; $$.push($1); }
+    : ID                        { $$ = [$1]; $$["append"] = false; }
     | key '.' ID                { $$.push($3); }
     | key '+'                   { $$["append"] = true; }
     ;
