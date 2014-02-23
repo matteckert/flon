@@ -18,13 +18,13 @@
 %%
 
 root
-    : key_value_list EOF            { return $1; }
+    : key_value_list EOF        { return $1; }
     ;
 
 key
-    : ID
-    | key '.' ID                    { throw new Error("Selectors are not supported yet."); }
-    | key '+'                       { throw new Error("Selectors are not supported yet."); }
+    : ID                        { $$ = []; $$.push($1); }
+    | key '.' ID                { $$.push($3); }
+    | key '+'                   { throw new Error("Append selector not implemented yet."); }
     ;
 
 value
@@ -34,21 +34,51 @@ value
     ;
 
 value_list
-    : value                         { $$ = []; $$.push($1); }
-    | value_list value              { $$.push($2); }
+    : value                     { $$ = []; $$.push($1); }
+    | value_list value          { $$.push($2); }
     ;
 
 key_value_list
-    : key value                     { $$ = {}; $$[$1] = $2; }
-    | key_value_list key value      { $$[$2] = $3; }
+    : key value                 {
+                                    $$ = {};
+
+                                    var prev = $$;
+                                    var current = $$;
+
+                                    for (var i = 0; i < $1.length; i++) {
+                                        
+                                        current[$1[i]] = {};
+                                        
+                                        prev = current;
+                                        current = current[$1[i]];
+                                    }
+
+                                    prev[$1[$1.length - 1]] = $2;
+                                }
+    | key_value_list key value  {
+                                    var prev = $$;
+                                    var current = $$;
+
+                                    for (var i = 0; i < $2.length; i++) {
+                                        
+                                        if (!current.hasOwnProperty($2[i])) {
+                                            current[$2[i]] = {};
+                                        }
+                                        
+                                        prev = current;
+                                        current = current[$2[i]];
+                                    }
+
+                                    prev[$2[$2.length - 1]] = $3;
+                                }
     ;
 
 object 
-    : '{' '}'                       { $$ = {}; }
-    | '{' key_value_list '}'        { $$ = $2; }
+    : '{' '}'                   { $$ = {}; }
+    | '{' key_value_list '}'    { $$ = $2; console.log("parsing object with props"); }
     ;
 
 array 
-    : '[' ']'                       { $$ = []; }
-    | '[' value_list ']'            { $$ = $2; }
+    : '[' ']'                   { $$ = []; }
+    | '[' value_list ']'        { $$ = $2; }
     ;
