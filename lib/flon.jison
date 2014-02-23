@@ -1,4 +1,9 @@
 %lex
+
+%{
+   var parser = yy.parser; 
+%}
+
 %%
 
 \s+                         /* skip whitespace */
@@ -15,6 +20,10 @@
 
 %start root
 
+%{
+    
+%}
+
 %%
 
 root
@@ -22,9 +31,9 @@ root
     ;
 
 key
-    : ID                        { $$ = []; $$.push($1); }
+    : ID                        { $$ = []; $$["append"] = false; $$.push($1); }
     | key '.' ID                { $$.push($3); }
-    | key '+'                   { throw new Error("Append selector not implemented yet."); }
+    | key '+'                   { $$["append"] = true; }
     ;
 
 value
@@ -34,51 +43,46 @@ value
     ;
 
 value_list
-    : value                     { $$ = []; $$.push($1); }
+    : value                     { $$ = [$1]; }
     | value_list value          { $$.push($2); }
     ;
 
 key_value_list
-    : key value                 {
-                                    $$ = {};
-
-                                    var prev = $$;
-                                    var current = $$;
-
-                                    for (var i = 0; i < $1.length; i++) {
-                                        
-                                        current[$1[i]] = {};
-                                        
-                                        prev = current;
-                                        current = current[$1[i]];
-                                    }
-
-                                    prev[$1[$1.length - 1]] = $2;
-                                }
-    | key_value_list key value  {
-                                    var prev = $$;
-                                    var current = $$;
-
-                                    for (var i = 0; i < $2.length; i++) {
-                                        
-                                        if (!current.hasOwnProperty($2[i])) {
-                                            current[$2[i]] = {};
-                                        }
-                                        
-                                        prev = current;
-                                        current = current[$2[i]];
-                                    }
-
-                                    prev[$2[$2.length - 1]] = $3;
-                                }
+    : key value                 { $$ = {}; yy.parser.handleSelector($$, $1, $2); }
+    | key_value_list key value  { yy.parser.handleSelector($$, $2, $3); }
     ;
 
 object 
     : '{' '}'                   { $$ = {}; }
-    | '{' key_value_list '}'    { $$ = $2; console.log("parsing object with props"); }
+    | '{' key_value_list '}'    { $$ = $2; }
     ;
 
 array 
     : '[' ']'                   { $$ = []; }
     | '[' value_list ']'        { $$ = $2; }
     ;
+
+%%
+
+parser.handleSelector = function(o, k, v) {
+    var prev = o;
+    var current = o;
+    for (var i = 0; i < k.length; i++) {
+        if (!current.hasOwnProperty(k[i])) {
+            current[k[i]] = {};
+        }
+        
+        prev = current;
+        current = current[k[i]];
+    }
+
+    var last = k[k.length - 1];
+    if (k.append) {
+        if (! (prev[last] instanceof Array)) {
+            prev[last] = [];
+        }
+        prev[last].push(v);
+    } else {
+        prev[last] = v;
+    }
+};
