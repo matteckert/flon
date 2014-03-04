@@ -4,7 +4,18 @@
    var parser = yy.parser; 
 %}
 
+%s initial comment
+
 %%
+
+/* Handle comments */
+
+"/*"                            this.begin('comment');
+<comment>"*/"                   this.begin('initial');
+<comment>[^*\n]+                // eat comment in chunks
+<comment>"*"                    // eat the lone star
+<comment>\n                     yylineno++;
+"//".*                          /* single line comment */
 
 \s+                             /* skip whitespace */
 [a-zA-Z][a-zA-Z0-9]*            return 'ID';

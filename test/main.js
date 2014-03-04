@@ -43,4 +43,32 @@ describe('flon', function() {
 
         flon.parse(flonText).should.eql(expected);
     });
+
+    it('should handle single line comments', function() {
+        var flonText = 'hi "there" // all the way to the end\nnot "here"';
+        var expected = {"hi": "there", "not": "here"};
+
+        flon.parse(flonText).should.eql(expected);
+    });
+
+    it('should handle multi line comments', function() {
+        var flonText = '/* beginning */ hi /* between */ "there" /* end */';
+        var expected = {"hi": "there"};
+
+        flon.parse(flonText).should.eql(expected);
+    });
+
+    it('should ignore single line comments in multi line comments', function() {
+        var flonText = 'hi "there" /* // all the way to the end */ not "here"';
+        var expected = {"hi": "there", "not": "here"};
+
+        flon.parse(flonText).should.eql(expected);
+    });
+
+    it('should ignore comments in strings', function() {
+        var flonText = 'hi "/* comment */ there"';
+        var expected = {"hi": "/* comment */ there"};
+
+        flon.parse(flonText).should.eql(expected);
+    });
 });
