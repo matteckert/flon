@@ -3,19 +3,30 @@ var flon = require('../lib/flon.js');
 
 describe('flon', function() {
     describe('values', function() {
-        it('should handle simple string values', function() {
-            var flonText = 'hi "there"';
-            var expected = {"hi": "there"};
+        describe('objects', function() {
+            it('should handle nested objects', function() {
+                var flonText = 'hi { im "nested" }';
+                var expected = {"hi": { "im" : "nested" } };
 
-            flon.parse(flonText).should.eql(expected);
+                flon.parse(flonText).should.eql(expected);
+            });
         });
 
-        it('should handle nested objects', function() {
-            var flonText = 'hi { im "nested" }';
-            var expected = {"hi": { "im" : "nested" } };
+        describe('strings', function() {
+            it('should handle simple string values', function() {
+                var flonText = 'hi "there"';
+                var expected = {"hi": "there"};
 
-            flon.parse(flonText).should.eql(expected);
-        });
+                flon.parse(flonText).should.eql(expected);
+            });
+
+            it('should handle multi line strings', function() {
+                var flonText = 'hi { im "a multi\nline string" }';
+                var expected = {"hi": { "im" : "a multi\nline string" } };
+
+                flon.parse(flonText).should.eql(expected);
+            });
+        }); 
     });
     
     describe('selectors', function() {
