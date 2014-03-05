@@ -24,6 +24,7 @@
     "gulp-mocha": "~0.4.1",
     "jshint-stylish": "~0.1.5",
     "should": "~3.1.2",
-    "gulp-util": "~2.2.14"
+    "gulp-util": "~2.2.14",
+    "gulp-jison": "0.0.1"
   }
 }
