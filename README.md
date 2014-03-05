@@ -10,7 +10,7 @@ Flat Object Notation (FLON) is designed to be easy to read and write. It has onl
 
         object { key "value" }
 
-- **Array**: square brackets with values, objects, or arrays inside.
+- **Array**: square brackets with strings, objects, or arrays inside.
 
         array [ "0" "1" [ "2a" "2b" ] { index "3" } ]
 
