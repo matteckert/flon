@@ -2,7 +2,7 @@ var should = require('should');
 var flon = require('../lib/flon.js');
 
 describe('flon', function() {
-    describe('values', function() {
+    describe('value', function() {
         describe('objects', function() {
             it('should handle nested objects', function() {
                 var flonText = 'hi { im "nested" }';
@@ -15,6 +15,13 @@ describe('flon', function() {
         describe('strings', function() {
             it('should handle simple string values', function() {
                 var flonText = 'hi "there"';
+                var expected = {"hi": "there"};
+
+                flon.parse(flonText).should.eql(expected);
+            });
+
+            it('should handle single quoted strings', function() {
+                var flonText = "hi 'there'";
                 var expected = {"hi": "there"};
 
                 flon.parse(flonText).should.eql(expected);

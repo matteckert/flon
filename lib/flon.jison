@@ -20,6 +20,7 @@
 \s+                             /* skip whitespace */
 [a-zA-Z][a-zA-Z0-9]*            return 'ID';
 \"(?:[^\"\\]|\\.)*\"            yytext = yytext.substr(1,yyleng-2); return 'STRING';
+\'(?:[^\'\\]|\\.)*\'            yytext = yytext.substr(1,yyleng-2); return 'STRING';
 "{"                             return '{';
 "}"                             return '}';
 "["                             return '[';
