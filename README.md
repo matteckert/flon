@@ -14,7 +14,7 @@ Flat Object Notation (FLON) is designed to be easy to read and write. It has onl
 
         array [ "0" "1" [ "2a" "2b" ] { index "3" } ]
 
-- **String**: UTF-8 surrounded by double quotes.
+- **String**: UTF-8 surrounded by double or single quotes.
 
 ### Root object
 
