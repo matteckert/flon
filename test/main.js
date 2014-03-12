@@ -2,6 +2,13 @@ var should = require('should');
 var flon = require('../lib/flon.js');
 
 describe('flon', function() {
+    it('should allow whitespace everywhere', function() {
+        var flonText = '  hi.there    {     im     [   "an"    "array"  ]    }  hi.what+   "hi"   ';
+        var expected = {"hi": { "there":  { "im" : [ "an", "array" ] }, "what": [ "hi" ] } };
+
+        flon.parse(flonText).should.eql(expected);
+    });
+
     describe('value', function() {
         describe('objects', function() {
             it('should handle nested objects', function() {
