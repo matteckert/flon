@@ -1,12 +1,11 @@
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var mocha = require('gulp-mocha');
-var jison = require('gulp-jison');
 
 var paths = {
     gulpfile : 'gulpfile.js',
     tests : 'test/**/*.js',
-    grammar : 'lib/*.jison'
+    source : 'lib/**/*.js',
 };
 
 var allpaths = [];
@@ -17,21 +16,15 @@ for (var path in paths) {
     }
 }
 
-gulp.task('default', ['lint', 'grammar', 'test']);
+gulp.task('default', ['lint', 'test']);
 
 gulp.task('lint', function(done) {
-    return gulp.src(paths.tests)
+    return gulp.src([paths.tests, paths.source])
         .pipe(jshint())
         .pipe(jshint.reporter('jshint-stylish'));
 });
 
-gulp.task('grammar', function() {
-    return gulp.src(paths.grammar)
-        .pipe(jison({ moduleType: 'commonjs' }))
-        .pipe(gulp.dest('lib'));
-});
-
-gulp.task('test', ['lint', 'grammar'], function() {
+gulp.task('test', ['lint'], function() {
     return gulp.src(paths.tests)
         .pipe(mocha({reporter: 'spec'}));
 });
