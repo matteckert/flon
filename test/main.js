@@ -138,5 +138,11 @@ describe('flon', function() {
 
             flon.parse(flonText).should.eql(expected);
         });
+
+        it('should throw if bad', function() {
+            var flonText = 'hi "there" /* // all the way to the end *// not "here"';
+
+            flon.parse.bind(null, flonText).should.throw(/^Bad comment/);
+        });
     });   
 });
