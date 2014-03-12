@@ -20,6 +20,13 @@ describe('flon', function() {
                 flon.parse(flonText).should.eql(expected);
             });
 
+            it('should handle escaped quotes', function() {
+                var flonText = 'hi "\\"there\\""';
+                var expected = {"hi": '"there"'};
+
+                flon.parse(flonText).should.eql(expected);
+            });
+
             it('should handle single quoted strings', function() {
                 var flonText = "hi 'there'";
                 var expected = {"hi": "there"};
