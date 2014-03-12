@@ -17,6 +17,12 @@ describe('flon', function() {
 
                 flon.parse(flonText).should.eql(expected);
             });
+
+            it('should throw if bad', function() {
+                var flonText = 'this.is { seriously "broken!"';
+
+                flon.parse.bind(null, flonText).should.throw(/^Bad object/);
+            });
         });
 
         describe('strings', function() {
@@ -47,10 +53,28 @@ describe('flon', function() {
 
                 flon.parse(flonText).should.eql(expected);
             });
-        }); 
+
+            it('should throw if bad', function() {
+                var flonText = 'this "broken';
+
+                flon.parse.bind(null, flonText).should.throw(/^Bad string/);
+            });
+        });
+        
+        describe('arrays', function() {
+            it('should allow all types', function() {
+                var flonText = 'arrays.can.hold [ "strings" { and "objects" } [ "and" "other" "arrays" ] ]';
+                var expected = { "arrays": { "can": { "hold": [ "strings", { "and": "objects" }, [ "and", "other", "arays" ] ] } } };
+            });
+            it('should throw if bad', function() {
+                var flonText = 'this.is [ "broken!"';
+
+                flon.parse.bind(null, flonText).should.throw(/^Bad array/);
+            });
+        });
     });
     
-    describe('selectors', function() {
+    describe('keys', function() {
         it('should handle simple dot notation selectors', function() {
             var flonText = 'dot.notation.is "cool"';
             var expected = {"dot":{"notation":{"is":"cool"}}};
@@ -77,6 +101,12 @@ describe('flon', function() {
             var expected = {"append":{"here":["this","is","very","nice"]}};
 
             flon.parse(flonText).should.eql(expected);
+        });
+
+        it('should throw if bad', function() {
+            var flonText = '"porkbutt"';
+
+            flon.parse.bind(null, flonText).should.throw(/^Bad key/);
         });
     });
 
