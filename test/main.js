@@ -6,49 +6,48 @@ describe('parse', function() {
         flon.parse('  a.b+  {  c.d  [  "e"  ]  }  ').should.eql({a: {b: [{c: {d: ['e']}}]}});
     });
 
-    describe('value', function() {
-        describe('objects', function() {
-            it('should handle nested objects', function() {
-                flon.parse('a {b "c"}').should.eql({a: {b: 'c'}});
-            });
-
-            it('should throw if bad', function() {
-                flon.parse.bind(null, 'a { b "c"').should.throw(/^Bad object/);
-            });
+    describe('objects', function() {
+        it('should handle nested objects', function() {
+            flon.parse('a {b "c"}').should.eql({a: {b: 'c'}});
         });
 
-        describe('strings', function() {
-            it('should handle simple string values', function() {
-                flon.parse('a "b"').should.eql({a: 'b'});
-            });
-
-            it('should handle escaped quotes', function() {
-                flon.parse('a "\\"b\\""').should.eql({a: '"b"'});
-            });
-
-            it('should handle single quoted strings', function() {
-                flon.parse("a 'b'").should.eql({a: 'b'});
-            });
-
-            it('should handle multi line strings', function() {
-                flon.parse('a "b\nc"').should.eql({a: 'b\nc' });
-            });
-
-            it('should throw if bad', function() {
-                flon.parse.bind(null, 'a "b').should.throw(/^Bad string/);
-            });
+        it('should throw if bad', function() {
+            flon.parse.bind(null, 'a { b "c"').should.throw(/^Bad object/);
         });
-        
-        describe('arrays', function() {
-            it('should allow all types', function() {
-                flon.parse('a [ "" {} [] ]').should.eql({a: ["", {}, []]});
-            });
-            it('should throw if bad', function() {
-                flon.parse.bind(null, 'a [ "b"').should.throw(/^Bad array/);
-            });
+    });
+
+    describe('strings', function() {
+        it('should handle simple string values', function() {
+            flon.parse('a "b"').should.eql({a: 'b'});
+        });
+
+        it('should handle escaped quotes', function() {
+            flon.parse('a "\\"b\\""').should.eql({a: '"b"'});
+        });
+
+        it('should handle single quoted strings', function() {
+            flon.parse("a 'b'").should.eql({a: 'b'});
+        });
+
+        it('should handle multi line strings', function() {
+            flon.parse('a "b\nc"').should.eql({a: 'b\nc' });
+        });
+
+        it('should throw if bad', function() {
+            flon.parse.bind(null, 'a "b').should.throw(/^Bad string/);
         });
     });
     
+    describe('arrays', function() {
+        it('should allow all types', function() {
+            flon.parse('a [ "" {} [] ]').should.eql({a: ["", {}, []]});
+        });
+
+        it('should throw if bad', function() {
+            flon.parse.bind(null, 'a [ "b"').should.throw(/^Bad array/);
+        });
+    });
+
     describe('keys', function() {
         it('should support underscores', function() {
             flon.parse('_a__b_ "c"').should.eql({_a__b_: 'c'});
@@ -61,7 +60,7 @@ describe('parse', function() {
         it('should handle more than one dot notation selector', function() {
             flon.parse('a.b "c" a.d "e"').should.eql({a: {b: 'c', d: 'e'}});
         });
-        
+
         it('should handle array append notation', function() {
             flon.parse('a.b+ "c"').should.eql({a: {b: ['c']}});
         });
