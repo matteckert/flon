@@ -75,6 +75,13 @@ describe('flon', function() {
     });
     
     describe('keys', function() {
+        it('should support underscores', function() {
+            var flonText = '_under____scores__ "rule"';
+            var expected = {"_under____scores__": "rule"};
+
+            flon.parse(flonText).should.eql(expected);
+        });
+
         it('should handle simple dot notation selectors', function() {
             var flonText = 'dot.notation.is "cool"';
             var expected = {"dot":{"notation":{"is":"cool"}}};
